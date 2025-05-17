@@ -1,0 +1,23 @@
+# Não versionar variáveis de ambiente
+.env
+
+# Não versionar dependências do Python
+venv/
+ENV/
+env/
+.venv/
+
+# Não versionar arquivos de cache do Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Não versionar arquivos de configuração do editor
+.vscode/
+.idea/
+
+# Não versionar arquivos de build do Docker
+docker/db-data/
+
+# Não versionar arquivos de log
+*.log
