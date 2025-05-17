@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    container_name: banco_simulador-db  # Nome do container
+    restart: unless-stopped   # Reinicia exceto se parado manualmente
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}  # Usuário do banco
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # Senha do banco
+      POSTGRES_DB: ${POSTGRES_DB} # Nome do banco
+    ports:
+      - "5432:5432"   # Mapeia a porta do banco para o host
+    volumes:
+      - ./docker/db-data:/var/lib/postgresql/data  # Persistência de dados
+    networks:
+      - amora-net  # Rede interna para comunicação entre containers
+
+  backend:
+    build:
+      context: ./backend  # Código do backend
+    container_name: amora-backend   # Nome do container do backend
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST: db  # Host do banco
+      POSTGRES_PORT: 5432  
+    depends_on:
+      - db  # Garante que o banco suba antes do backend
+    ports:
+      - "8000:8000" # Porta do backend
+    volumes:
+      - ./backend/app:/app/app  # Sincroniza código local com o container
+    networks:
+      - amora-net
+
+networks:
+  amora-net: 
