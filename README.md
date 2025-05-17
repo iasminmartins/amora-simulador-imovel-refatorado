@@ -81,18 +81,15 @@ Há persistência dos dados da simulação, incluindo um timestamp e o resultado
 #### Endpoints implementados:
 
 POST /simulacao: Recebe os dados, realiza os cálculos conforme as fórmulas, persiste no banco e retorna a resposta.
+GET /historico: Retorna todas as simulações já realizadas.
 
 #### Validações:
 
 Campos obrigatórios validados com Pydantic e restrições de valor (mínimos, máximos e tipos) implementadas com Field.
 
-### Etapa 3 - Frontend com Next.js
+### Etapa 3 - Testes
 
-### Etapa 4 - Testes
-
-#### Testes funcionais (Swagger)
-
-##### Teste de validação do endpoint POST /simulacao 
+#### Teste de validação do endpoint POST /simulacao 
 
 Todos os testes a seguir foram realizados via Swagger UI em [http://localhost:8000/docs](http://localhost:8000/docs) para garantir que as validações definidas no schema `SimulacaoCreate` estão funcionando corretamente.
 
@@ -111,3 +108,29 @@ Todos os testes a seguir foram realizados via Swagger UI em [http://localhost:80
 Todos os testes retornaram os erros esperados (`422 Unprocessable Entity`) quando os dados estavam fora dos critérios definidos.
 
 ---
+
+#### Teste manual do endpoint GET /historico
+
+Foi realizada uma requisição GET ao endpoint /historico utilizando a interface Swagger UI em http://localhost:8000/docs.
+
+Parâmetros: Nenhum
+
+Requisição:
+
+```bash
+curl -X 'GET' \
+  'http://localhost:8000/historico' \
+  -H 'accept: application/json'
+```
+Resposta esperada: Código 200 OK com lista de simulações armazenadas no banco de dados.
+Resposta obtida: ✅ Sucesso – lista de simulações retornada conforme esperado.
+
+| ID | Data da Simulação          | Valor do Imóvel | % Entrada | Anos de Contrato | Valor Entrada | Valor Financiado | Guardar Total | Guardar Mensal |
+| -- | -------------------------- | --------------- | --------- | ---------------- | ------------- | ---------------- | ------------- | -------------- |
+| 1  | 2025-05-17T21:14:46.355467 | R\$ 300.000     | 20%       | 10 anos          | R\$ 60.000    | R\$ 240.000      | R\$ 45.000    | R\$ 375,00     |
+| 2  | 2025-05-17T21:15:19.322987 | R\$ 400.000     | 5%        | 3 anos           | R\$ 20.000    | R\$ 380.000      | R\$ 60.000    | R\$ 1.666,67   |
+| 3  | 2025-05-17T21:33:51.185882 | R\$ 0,01        | 0,01%     | 1 ano            | R\$ 0,00      | R\$ 0,01         | R\$ 0,00      | R\$ 0,00       |
+
+Resultado: ✅ O endpoint está funcionando corretamente e retorna todas as simulações persistidas no banco.
+
+### Etapa 4 - Frontend com Next.js
