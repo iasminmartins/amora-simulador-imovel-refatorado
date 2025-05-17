@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // Tipo para o resultado da simulação
 type Resultado = {
@@ -38,5 +38,34 @@ export default function Home() {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  return <div>Estados e handlers prontos</div>
+  // Quando o formulário é enviado
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const resposta = await fetch('http://localhost:8000/simulacao', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        valor_imovel: parseFloat(form.valor_imovel),
+        percentual_entrada: parseFloat(form.percentual_entrada),
+        anos_contrato: parseInt(form.anos_contrato)
+      })
+    })
+    const dados = await resposta.json()
+    setResultado(dados.resultados)
+    getHistorico()
+  }
+
+  // Busca histórico de simulações do backend
+  const getHistorico = async () => {
+    const resposta = await fetch('http://localhost:8000/historico')
+    const dados = await resposta.json()
+    setHistorico(Array.isArray(dados) ? dados : [])
+  }
+
+  // Carrega o histórico ao montar o componente
+  useEffect(() => {
+    getHistorico()
+  }, [])
+
+  return <div>Integração com backend pronta</div>
 }
