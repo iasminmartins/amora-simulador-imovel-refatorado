@@ -83,6 +83,15 @@ Há persistência dos dados da simulação, incluindo um timestamp e o resultado
 POST /simulacao: Recebe os dados, realiza os cálculos conforme as fórmulas, persiste no banco e retorna a resposta.
 GET /historico: Retorna todas as simulações já realizadas.
 
+#### Fórmulas utilizadas:
+
+| Cálculo          | Fórmula                                     |
+| ---------------- | ------------------------------------------- |
+| Valor de entrada | `valor_imovel * (percentual_entrada / 100)` |
+| Valor financiado | `valor_imovel - valor_entrada`              |
+| Valor a guardar  | `valor_imovel * 0.15`                       |
+| Guardar mensal   | `guardar_total / (anos_contrato * 12)`      |
+
 #### Validações:
 
 Campos obrigatórios validados com Pydantic e restrições de valor (mínimos, máximos e tipos) implementadas com Field.
