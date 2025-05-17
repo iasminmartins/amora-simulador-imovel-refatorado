@@ -56,3 +56,8 @@ def criar_simulacao(simulacao: schemas.SimulacaoCreate, db: Session = Depends(ge
     db.commit()               # Salva no banco
     db.refresh(db_simulacao)  # Atualiza com dados do banco (ex: id)
     return db_simulacao       # Retorna a simulação criada
+
+# Endpoint para listar todas as simulações
+@app.get("/historico", response_model=list[schemas.SimulacaoResponse])
+def listar_simulacoes(db: Session = Depends(get_db)):
+    return db.query(models.Simulacao).all()
