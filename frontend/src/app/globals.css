@@ -1,4 +1,4 @@
-/* Reset e estilos globais */
+/* Reset e tipografia */
 body {
   margin: 0;
   text-align: center; 
@@ -7,7 +7,7 @@ body {
   color: #121e4b;      
 }
 
-/* Container principal da página */
+/* Layout principal */
 main {
   padding: 2rem;
   max-width: 600px;
@@ -18,31 +18,34 @@ main {
   border: 1px solid #E0E0E0;
 }
 
-/* Títulos principais */
+/* Títulos */
 h1, h2 {
   color: #121e4b; 
-  margin-top: 10;
+  margin-top: 10px;
   font-weight: 800;
 }
 
-/* Espaçamento entre campos do formulário */
+/* Formulários */
 form > div {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.2rem; /* Espaçamento entre campos do formulário */
 }
 
-/* Estilo dos labels dos inputs */
+form {
+  margin-bottom: 2rem; /* Espaçamento entre o formulário e o próximo elemento */
+}
+
+form button {
+  margin-top: 1rem; /* Espaçamento superior do botão dentro do formulário */
+}
+
+/* Labels */
 label {
   display: block;
   margin-bottom: 0.3rem;
   font-weight: 500;
 }
 
-/* Espaçamento entre itens das listas */
-li {
-  margin-bottom: 0.7rem;
-}
-
-/* Estilo dos campos numéricos do formulário */
+/* Inputs e texto auxiliar */
 input[type="number"] {
   width: 100%;
   padding: 0.6rem;
@@ -54,12 +57,17 @@ input[type="number"] {
   box-sizing: border-box;
 }
 
-/* Cor do placeholder dos inputs */
 input[type="number"]::placeholder {
   color: #A0A0A0; 
 }
 
-/* Estilo do botão principal */
+.input-helper {
+  font-size: 0.95em;
+  color: #666;
+  margin-top: 0.3em;
+}
+
+/* Botão */
 button {
   padding: 0.7rem 1.5rem;
   background: #6941C6;      
@@ -79,17 +87,21 @@ button:focus {
   background: #5B36B0;      
 }
 
-/* Espaçamento à esquerda das listas */
+/* Listas */
 ul {
-  padding-left: 1.2rem;
+  padding-left: 1.2rem; /* Espaçamento à esquerda das listas */
 }
 
-/* Espaçamento entre seções */
+li {
+  margin-bottom: 0.7rem; /* Espaçamento entre itens das listas */
+}
+
+/* Seções */
 section {
-  margin-bottom: 2rem;
+  margin-bottom: 2rem; /* Espaçamento entre seções */
 }
 
-/* Estilo do rodapé */
+/* Rodapé */
 footer {
   text-align: center;
   color: #A0A0A0;
