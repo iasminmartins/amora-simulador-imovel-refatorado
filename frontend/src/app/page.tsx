@@ -106,6 +106,32 @@ export default function Home() {
           Simular
         </button>
       </form>
+
+      {/* Exibe o resultado da simulação, se houver */}
+      {resultado && (
+        <section>
+          <h2>Resultado da Simulação</h2>
+          <ul>
+            <li>Valor da Entrada: R$ {resultado.valor_entrada}</li>
+            <li>Valor Financiado: R$ {resultado.valor_financiado}</li>
+            <li>Total a Guardar: R$ {resultado.guardar_total}</li>
+            <li>Valor Mensal a Guardar: R$ {resultado.guardar_mensal}</li>
+          </ul>
+        </section>
+      )}
+
+      {/* Exibe o histórico de simulações */}
+      <section>
+        <h2>Histórico de Simulações</h2>
+        <ul>
+          {historico.length === 0 && <li>Nenhuma simulação encontrada.</li>}
+          {historico.map((item) => (
+            <li key={item.id}>
+              {new Date(item.data).toLocaleString()} — R$ {item.valor_imovel}
+            </li>
+          ))}
+        </ul>
+      </section>
     </>
   )
 }
