@@ -31,16 +31,28 @@ amora-simulador-imovel/
 │   │   ├── schemas.py
 │   │   └── database.py
 │   ├── dockerfile
-│   ├── requirements.txt
+│   └── requirements.txt
 ├── frontend/
-│    ├── dockerfile
-│    └── src/
-│       └── app/
-│           ├── globals.css
-│           ├── layout.tsx
-│           └── page.tsx
-├── docker-compose.yml
+│   ├── public/
+│   ├── src/
+│   │    └── app/
+│   │        ├── globals.css
+│   │        ├── historico.tsx
+│   │        ├── layout.tsx
+│   │        ├── page.tsx
+│   │        ├── resultado.tsx
+│   │        └── simuladorForm.tsx
+│   ├── .gitignore
+│   ├── dockerfile
+│   ├── eslint.config.mjs
+│   ├── next.config.js
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── postcss.config.mjs
+│   └── tsconfig.json
 ├── .env.example
+├── .gitignore
+├── docker-compose.yml
 └── README.md
 ``` </pre>
 ---
@@ -181,7 +193,7 @@ Após o retorno da API, os resultados da simulação são exibidos de forma clar
 Uma seção dedicada exibe o histórico de todas as simulações já realizadas, obtidas através de uma requisição HTTP GET ao endpoint /historico da API.
 
 - Estilização:
-O layout utiliza a paleta de cores da Amora, garantindo identidade visual e boa usabilidade, com responsividade e foco na experiência do usuário.
+O layout utiliza a paleta de cores da Amora, garantindo identidade visual e boa usabilidade, com responsividade e foco na experiência do usuário. 
 
 ---
 
