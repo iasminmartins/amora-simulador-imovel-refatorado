@@ -21,6 +21,7 @@ Permitir que o usuário simule a compra de um imóvel informando o valor total, 
 
 ## Estrutura do projeto
 
+<pre> ```
 amora-simulador-imovel/
 ├── backend/
 │   ├── app/
@@ -41,7 +42,7 @@ amora-simulador-imovel/
 ├── docker-compose.yml
 ├── .env.example
 └── README.md
-
+``` </pre>
 ---
 
 ## Como executar o projeto com Docker
@@ -66,16 +67,16 @@ cp .env.example .env
 docker-compose up --build
 ```
 
-## Parar e remover containers (antes de subir a aplicação novamente, caso necessário)
+### 4. Parar e remover containers (antes de subir a aplicação novamente, caso necessário)
 
 ```bash
 docker-compose down --volumes
 ```
 
-### 4. Acesse:
+### 5. Acesse:
 
-> Frontend: http://localhost:3000
-> Backend: http://localhost:8000/docs
+- Frontend: http://localhost:3000
+- Backend: http://localhost:8000/docs
 
 ---
 
@@ -107,13 +108,13 @@ GET /historico: Retorna todas as simulações já realizadas.
 
 Campos obrigatórios validados com Pydantic e restrições de valor (mínimos, máximos e tipos) implementadas com Field.
 
-### Variáveis de ambiente Backend
+#### Variáveis de ambiente Backend
 
-POSTGRES_USER — Usuário do banco de dados PostgreSQL
-POSTGRES_PASSWORD — Senha do banco de dados PostgreSQL
-POSTGRES_DB — Nome do banco de dados PostgreSQL
-POSTGRES_HOST — Host do banco de dados (normalmente db no Docker Compose)
-POSTGRES_PORT — Porta do banco de dados (padrão: 5432)
+- `POSTGRES_USER` — Usuário do banco de dados PostgreSQL  
+- `POSTGRES_PASSWORD` — Senha do banco de dados PostgreSQL  
+- `POSTGRES_DB` — Nome do banco de dados PostgreSQL  
+- `POSTGRES_HOST` — Host do banco de dados (normalmente `db` no Docker Compose)  
+- `POSTGRES_PORT` — Porta do banco de dados (padrão: `5432`) 
 
 ### Etapa 3 - Testes
 
@@ -167,19 +168,19 @@ O frontend foi desenvolvido utilizando Next.js (React) para proporcionar uma exp
 
 #### Funcionalidades implementadas:
 
-> Formulário de Simulação:
+- Formulário de Simulação:
 O usuário pode inserir o valor do imóvel, percentual de entrada e anos de contrato em um formulário simples e validado.
 
-> Integração com a API:
+- Integração com a API:
 Ao submeter o formulário, é realizada uma requisição HTTP POST para o endpoint /simulacao do backend, enviando os dados no formato JSON.
 
-> Exibição dos Resultados:
+- Exibição dos Resultados:
 Após o retorno da API, os resultados da simulação são exibidos de forma clara e organizada na tela, permitindo ao usuário visualizar facilmente os valores calculados.
 
-> Histórico de Simulações:
+- Histórico de Simulações:
 Uma seção dedicada exibe o histórico de todas as simulações já realizadas, obtidas através de uma requisição HTTP GET ao endpoint /historico da API.
 
-> Estilização:
+- Estilização:
 O layout utiliza a paleta de cores da Amora, garantindo identidade visual e boa usabilidade, com responsividade e foco na experiência do usuário.
 
 ---
