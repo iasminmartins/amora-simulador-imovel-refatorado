@@ -1,0 +1,98 @@
+/* Reset e estilos globais */
+body {
+  margin: 0;
+  text-align: center; 
+  font-family: Arial, sans-serif;
+  background: #f7dbff; 
+  color: #121e4b;      
+}
+
+/* Container principal da página */
+main {
+  padding: 2rem;
+  max-width: 600px;
+  margin: 2rem auto;
+  background: #dcf1fc;   
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(160, 160, 160, 0.08);
+  border: 1px solid #E0E0E0;
+}
+
+/* Títulos principais */
+h1, h2 {
+  color: #121e4b; 
+  margin-top: 10;
+  font-weight: 800;
+}
+
+/* Espaçamento entre campos do formulário */
+form > div {
+  margin-bottom: 1.2rem;
+}
+
+/* Estilo dos labels dos inputs */
+label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+/* Espaçamento entre itens das listas */
+li {
+  margin-bottom: 0.7rem;
+}
+
+/* Estilo dos campos numéricos do formulário */
+input[type="number"] {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #E0E0E0;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: #2E2E2E;
+  background: #FFF;
+  box-sizing: border-box;
+}
+
+/* Cor do placeholder dos inputs */
+input[type="number"]::placeholder {
+  color: #A0A0A0; 
+}
+
+/* Estilo do botão principal */
+button {
+  padding: 0.7rem 1.5rem;
+  background: #6941C6;      
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.2s;
+  margin-top: 1rem;
+}
+
+/* Efeito hover/focus no botão */
+button:hover,
+button:focus {
+  background: #5B36B0;      
+}
+
+/* Espaçamento à esquerda das listas */
+ul {
+  padding-left: 1.2rem;
+}
+
+/* Espaçamento entre seções */
+section {
+  margin-bottom: 2rem;
+}
+
+/* Estilo do rodapé */
+footer {
+  text-align: center;
+  color: #A0A0A0;
+  margin-top: 2rem;
+  font-size: 0.95rem;
+}
