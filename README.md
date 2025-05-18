@@ -29,9 +29,15 @@ amora-simulador-imovel/
 │   │   ├── models.py
 │   │   ├── schemas.py
 │   │   └── database.py
-│   ├── Dockerfile
+│   ├── dockerfile
 │   ├── requirements.txt
 ├── frontend/
+│    ├── dockerfile
+│    └── src/
+│       └── app/
+│           ├── globals.css
+│           ├── layout.tsx
+│           └── page.tsx
 ├── docker-compose.yml
 ├── .env.example
 └── README.md
@@ -59,13 +65,18 @@ cp .env.example .env
 ```bash
 docker-compose up --build
 ```
-Acesse o backend em: http://localhost:8000/docs
 
-## Parar e remover containers
+## Parar e remover containers (antes de subir a aplicação novamente, caso necessário)
 
 ```bash
 docker-compose down --volumes
 ```
+
+### 4. Acesse:
+
+> Frontend: http://localhost:3000
+> Backend: http://localhost:8000/docs
+
 ---
 
 ## Etapas de desenvolvimento
@@ -95,6 +106,14 @@ GET /historico: Retorna todas as simulações já realizadas.
 #### Validações:
 
 Campos obrigatórios validados com Pydantic e restrições de valor (mínimos, máximos e tipos) implementadas com Field.
+
+### Variáveis de ambiente Backend
+
+POSTGRES_USER — Usuário do banco de dados PostgreSQL
+POSTGRES_PASSWORD — Senha do banco de dados PostgreSQL
+POSTGRES_DB — Nome do banco de dados PostgreSQL
+POSTGRES_HOST — Host do banco de dados (normalmente db no Docker Compose)
+POSTGRES_PORT — Porta do banco de dados (padrão: 5432)
 
 ### Etapa 3 - Testes
 
@@ -143,3 +162,51 @@ Resposta obtida: ✅ Sucesso – lista de simulações retornada conforme espera
 Resultado: ✅ O endpoint está funcionando corretamente e retorna todas as simulações persistidas no banco.
 
 ### Etapa 4 - Frontend com Next.js
+
+O frontend foi desenvolvido utilizando Next.js (React) para proporcionar uma experiência de usuário moderna, responsiva e intuitiva. Acesse o port http://localhost:3000 para utilizar o simulador.
+
+#### Funcionalidades implementadas:
+
+> Formulário de Simulação:
+O usuário pode inserir o valor do imóvel, percentual de entrada e anos de contrato em um formulário simples e validado.
+
+> Integração com a API:
+Ao submeter o formulário, é realizada uma requisição HTTP POST para o endpoint /simulacao do backend, enviando os dados no formato JSON.
+
+> Exibição dos Resultados:
+Após o retorno da API, os resultados da simulação são exibidos de forma clara e organizada na tela, permitindo ao usuário visualizar facilmente os valores calculados.
+
+> Histórico de Simulações:
+Uma seção dedicada exibe o histórico de todas as simulações já realizadas, obtidas através de uma requisição HTTP GET ao endpoint /historico da API.
+
+> Estilização:
+O layout utiliza a paleta de cores da Amora, garantindo identidade visual e boa usabilidade, com responsividade e foco na experiência do usuário.
+
+---
+
+## Possíveis melhorias e próximos passos
+
+- Validação e feedback visual no frontend:
+Adicionar mensagens de erro e validação em tempo real nos campos do formulário para melhorar a experiência do usuário.
+
+- Mensagens de sucesso/erro:
+Exibir alertas claros ao usuário após o envio do formulário, tanto para sucesso quanto para falhas de comunicação com a API.
+
+- Acessibilidade:
+Tornar a aplicação mais acessível, garantindo navegação por teclado, uso correto de labels, contraste adequado de cores, textos alternativos para leitores de tela e estrutura semântica nos elementos HTML.
+
+- Responsividade avançada:
+Melhorar o layout para dispositivos móveis e tablets.
+
+- Melhorias no layout:
+Refinar o design visual, ajustar espaçamentos, tamanhos de fonte e responsividade, além de considerar animações suaves e feedback visual para interações do usuário.
+
+- Autenticação de usuários:
+Implementar login/cadastro para que cada usuário possa ver apenas seu próprio histórico de simulações.
+
+- Exportação de resultados:
+Permitir ao usuário exportar a simulação em PDF ou CSV.
+
+- Documentação da API:
+Expandir a documentação dos endpoints, exemplos de request/response e possíveis erros.
+
