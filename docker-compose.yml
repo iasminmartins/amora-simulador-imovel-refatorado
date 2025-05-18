@@ -19,6 +19,7 @@ services:
   backend:
     build:
       context: ./backend  # Código do backend
+      dockerfile: dockerfile  # Dockerfile do backend
     container_name: amora-backend   # Nome do container do backend
     restart: unless-stopped
     environment:
@@ -33,6 +34,18 @@ services:
       - "8000:8000" # Porta do backend
     volumes:
       - ./backend/app:/app/app  # Sincroniza código local com o container
+    networks:
+      - amora-net
+  frontend:
+    build:
+      context: ./frontend  # Código do frontend
+      dockerfile: dockerfile  # Dockerfile do frontend
+    container_name: amora-frontend # Nome do container do frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      ./frontend:/app
     networks:
       - amora-net
 
