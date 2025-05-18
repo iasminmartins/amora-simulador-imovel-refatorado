@@ -1,5 +1,8 @@
 'use client'
 import { useState, useEffect } from 'react'
+import SimuladorForm from './simuladorForm'
+import Resultado from './resultado'
+import Historico from './historico'
 
 // Tipo para o resultado da simulação
 type Resultado = {
@@ -71,67 +74,13 @@ export default function Home() {
   return (
     <>
       {/* Formulário de simulação */}
-      <form onSubmit={handleSubmit} style={{ marginBottom: '2rem' }}>
-        <div>
-          <label>Valor do Imóvel (R$): </label>
-          <input
-            name="valor_imovel"
-            type="number"
-            value={form.valor_imovel}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Percentual de Entrada (%): </label>
-          <input
-            name="percentual_entrada"
-            type="number"
-            value={form.percentual_entrada}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Anos de Contrato: </label>
-          <input
-            name="anos_contrato"
-            type="number"
-            value={form.anos_contrato}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit" style={{ marginTop: '1rem' }}>
-          Simular
-        </button>
-      </form>
+      <SimuladorForm form={form} onChange={handleChange} onSubmit={handleSubmit} />
 
       {/* Exibe o resultado da simulação, se houver */}
-      {resultado && (
-        <section>
-          <h2>Resultado da Simulação</h2>
-          <ul>
-            <li>Valor da Entrada: R$ {resultado.valor_entrada}</li>
-            <li>Valor Financiado: R$ {resultado.valor_financiado}</li>
-            <li>Total a Guardar: R$ {resultado.guardar_total}</li>
-            <li>Valor Mensal a Guardar: R$ {resultado.guardar_mensal}</li>
-          </ul>
-        </section>
-      )}
+      <Resultado resultado={resultado} />
 
       {/* Exibe o histórico de simulações */}
-      <section>
-        <h2>Histórico de Simulações</h2>
-        <ul>
-          {historico.length === 0 && <li>Nenhuma simulação encontrada.</li>}
-          {historico.map((item) => (
-            <li key={item.id}>
-              {new Date(item.data).toLocaleString()} — R$ {item.valor_imovel}
-            </li>
-          ))}
-        </ul>
-      </section>
+      <Historico historico={historico} />
     </>
   )
 }
