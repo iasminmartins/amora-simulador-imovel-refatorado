@@ -33,7 +33,6 @@ amora-simulador-imovel/
 │   ├── dockerfile
 │   └── requirements.txt
 ├── frontend/
-│   ├── public/
 │   ├── src/
 │   │    └── app/
 │   │        ├── globals.css
@@ -193,7 +192,7 @@ Após o retorno da API, os resultados da simulação são exibidos de forma clar
 Uma seção dedicada exibe o histórico de todas as simulações já realizadas, obtidas através de uma requisição HTTP GET ao endpoint /historico da API.
 
 - Estilização:
-O layout utiliza a paleta de cores da Amora, garantindo identidade visual e boa usabilidade, com responsividade e foco na experiência do usuário. 
+O layout utiliza a paleta de cores da aMORA, garantindo identidade visual e boa usabilidade, com responsividade e foco na experiência do usuário. 
 
 ---
 
@@ -222,4 +221,3 @@ Permitir ao usuário exportar a simulação em PDF ou CSV.
 
 - Documentação da API:
 Expandir a documentação dos endpoints, exemplos de request/response e possíveis erros.
-
