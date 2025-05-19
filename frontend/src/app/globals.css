@@ -1,3 +1,4 @@
+/* Fonte */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
 
 /* Paleta de cores (variáveis) */
@@ -9,10 +10,11 @@
   --color-white: #FFF;
   --color-grey: #A0A0A0;
   --color-dark: #121e4b;
+  --color-light: #dcf1fc;
   --color-shadow: rgba(0, 0, 0, 0.04);
 }
 
-/* Reset e tipografia */
+/* Estrutura */
 body {
   margin: 0;
   text-align: center; 
@@ -21,41 +23,45 @@ body {
   color: var(--color-primary);      
 }
 
-/* Layout principal */
-main {
-  padding: 2rem;
-  width: 90%;
-  max-width: 600px;
-  margin: 2rem auto;  
-  border-radius: 20px;
-  background: var(--color-accent); 
-  box-shadow: 0 2px 16px var(--color-shadow);
-  border: 5px solid var(--color-secondary);
+header {
+  background: var(--color-secondary);
+  padding: 1rem 0;
+}
+
+main { 
+  background: var(--color-bg); 
+  padding: 2rem 0;
+}
+
+section {
+  margin-bottom: 2rem; /* Espaçamento entre seções */
+}
+
+footer {
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 2rem 0;
 }
 
 /* Títulos */
 h1{ 
   font-size: 2.7rem;
   font-weight: 800;
-  margin-top: 2rem;
+  margin-top: 1rem;
 } 
 
 h2 {
-  border-left: 6px solid var(--color-secondary);
-  padding-left: 1rem;
   font-size: 1.8rem;
   font-weight: 800;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
-/* Formulários */
+/* Formulário */
 form > div {
   margin-bottom: 1.8rem; /* Espaçamento entre campos do formulário */
   text-align: left;
-}
-
-form {
-  margin-bottom: 3.5rem; /* Espaçamento entre o formulário e o próximo elemento */
 }
 
 /* Labels */
@@ -84,7 +90,7 @@ input::placeholder {
 }
 
 input:focus {
-  outline: 3px solid var(--color-dark);
+  outline: 4px solid var(--color-secondary);
 }
 
 .input-helper {
@@ -115,32 +121,74 @@ button:focus {
   color: var(--color-dark);
 }
 
-/* Listas */
-ul {
-  list-style: none;
-  padding-left: 1.2rem; /* Espaçamento à esquerda das listas */
+/* Blocos de conteúdo */
+.bloco-formulario,
+.bloco-resultado,
+.bloco-historico {
+  padding: 2rem;
+  width: 90%;
+  max-width: 600px;
+  margin: 2rem auto;  
+  border-radius: 20px; 
+  box-shadow: 0 2px 16px var(--color-shadow);
+  border: 5px solid var(--color-secondary);
 }
 
-li {
-  background: var(--color-white);
-  padding: 0.8rem 1rem;
-  border-radius: 10px;
-  margin-bottom: 0.8rem; /* Espaçamento entre itens das listas */
-  font-weight: 500;
-  text-align: left;
-  box-shadow: 0 1px 4px var(--color-shadow);
+.bloco-formulario {
+  background: var(--color-accent); 
+  border: 5px solid var(--color-primary);
 }
 
-/* Seções */
-section {
-  margin-bottom: 2rem; /* Espaçamento entre seções */
+.bloco-resultado {
+  background: var(--color-primary); 
+  border: 5px solid var(--color-secondary);
+  color: var(--color-secondary);
 }
 
-/* Rodapé */
-footer {
+.bloco-historico {
+  background: var(--color-secondary); 
+  border: 5px solid var(--color-accent);
+}
+
+/* Resultado da simulação */
+.resultado-card {
+  background: var(--color-light);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--color-shadow);
+  padding: 1.5rem;
+  margin: 2rem auto;
+  max-width: 500px;
+}
+
+.resultado-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.resultado-grid div {
+  background: var(--color-accent);
+  border-radius: 8px;
+  padding: 0.8rem;
   text-align: center;
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
-  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* Histórico de simulações */
+.historico-item {
+  display: flex;
+  justify-content: space-between;
+  background: var(--color-white);
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  margin-bottom: 0.7rem;
+  box-shadow: 0 1px 4px var(--color-shadow);
+  font-size: 1rem;
+}
+
+.historico-vazio {
+  color: var(--color-grey);
+  text-align: center;
+  margin: 1rem 0;
 }
