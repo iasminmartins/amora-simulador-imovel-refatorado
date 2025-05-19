@@ -25,16 +25,26 @@ export default function Historico({ historico }: HistoricoProps) {
   return (
     <section>
       <h2>Histórico de Simulações</h2>
-      <ul>
+      <div>
         {/* Exibe mensagem se não houver simulações */}
-        {historico.length === 0 && <li>Nenhuma simulação encontrada.</li>}
+        {historico.length === 0 && (
+          <div className="historico-vazio">Nenhuma simulação encontrada.</div>
+        )}
         {/* Lista cada simulação do histórico */}
-        {historico.map((item) => (
-          <li key={item.id}>
-            {new Date(item.data).toLocaleString()} — R$ {item.valor_imovel}
-          </li>
-        ))}
-      </ul>
+        {historico.map((item) => {
+          const dataObj = new Date(item.data)
+          return (
+            <div className="historico-item" key={item.id}>
+              <span>
+                {dataObj.toLocaleDateString('pt-BR')} {dataObj.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+              </span>
+              <span style={{ marginLeft: 12 }}>
+                R$ {item.valor_imovel.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+              </span>
+            </div>
+          )
+        })}
+      </div>
     </section>
   )
 }

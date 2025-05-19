@@ -73,14 +73,15 @@ export default function Home() {
 
   return (
     <>
-      {/* Formulário de simulação */}
+      <div className="bloco-formulario">
       <SimuladorForm form={form} onChange={handleChange} onSubmit={handleSubmit} />
-
-      {/* Exibe o resultado da simulação, se houver */}
+    </div>
+    <div className="bloco-resultado">
       <Resultado resultado={resultado} />
-
-      {/* Exibe o histórico de simulações */}
+    </div>
+    <div className="bloco-historico">
       <Historico historico={historico} />
+    </div>
     </>
   )
 }

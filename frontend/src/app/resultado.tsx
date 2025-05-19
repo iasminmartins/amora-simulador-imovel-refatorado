@@ -16,13 +16,24 @@ export default function Resultado({ resultado }: ResultadoProps) {
   return (
     <section>
       <h2>Resultado da Simulação</h2>
-      <ul>
-        {/* Exibe os valores calculados da simulação */}
-        <li>Valor da entrada: R$ {resultado.valor_entrada}</li>
-        <li>Valor financiado: R$ {resultado.valor_financiado}</li>
-        <li>Total a guardar: R$ {resultado.guardar_total}</li>
-        <li>Valor mensal a guardar: R$ {resultado.guardar_mensal}</li>
-      </ul>
+      <div className="resultado-grid">
+        <div>
+          <strong>Valor da entrada:</strong>
+          <div>R$ {resultado.valor_entrada}</div>
+        </div>
+        <div>
+          <strong>Valor financiado:</strong>
+          <div>R$ {resultado.valor_financiado}</div>
+        </div>
+        <div>
+          <strong>Total a guardar:</strong>
+          <div>R$ {resultado.guardar_total}</div>
+        </div>
+        <div>
+          <strong>Valor mensal a guardar:</strong>
+          <div>R$ {resultado.guardar_mensal}</div>
+        </div>
+      </div>
     </section>
   )
 }
