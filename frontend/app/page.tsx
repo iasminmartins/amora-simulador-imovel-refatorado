@@ -35,7 +35,7 @@ export default function Home() {
 
   // Estado para o histórico de simulações
   const [historico, setHistorico] = useState<HistoricoItem[]>([])
-
+  
   // Atualiza os dados do formulário conforme o usuário digita
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -74,14 +74,14 @@ export default function Home() {
   return (
     <>
       <div className="bloco-formulario">
-      <SimuladorForm form={form} onChange={handleChange} onSubmit={handleSubmit} />
-    </div>
-    <div className="bloco-resultado">
-      <Resultado resultado={resultado} />
-    </div>
-    <div className="bloco-historico">
-      <Historico historico={historico} />
-    </div>
+        <SimuladorForm form={form} onChange={handleChange} onSubmit={handleSubmit} />
+      </div>
+      <div className="bloco-resultado">
+        <Resultado resultado={resultado} />
+      </div>
+      <div className="bloco-historico">
+        <Historico historico={historico} />
+      </div>
     </>
   )
 }
