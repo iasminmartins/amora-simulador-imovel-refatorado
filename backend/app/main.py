@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from . import models, schemas
 from .database import SessionLocal, engine
@@ -30,34 +30,44 @@ def get_db():
 # Endpoint para criar uma nova simulação de financiamento imobiliário
 @app.post("/simulacao", response_model=schemas.SimulacaoResponse)
 def criar_simulacao(simulacao: schemas.SimulacaoCreate, db: Session = Depends(get_db)):
-    # Cálculo dos valores da simulação
-    valor_entrada = simulacao.valor_imovel * (simulacao.percentual_entrada / 100)
-    valor_financiado = simulacao.valor_imovel - valor_entrada
-    guardar_total = simulacao.valor_imovel * 0.15
-    guardar_mensal = guardar_total / (simulacao.anos_contrato * 12)
+    try:
+        # Cálculo dos valores da simulação
+        valor_entrada = simulacao.valor_imovel * (simulacao.percentual_entrada / 100)
+        valor_financiado = simulacao.valor_imovel - valor_entrada
+        guardar_total = simulacao.valor_imovel * 0.15
+        guardar_mensal = guardar_total / (simulacao.anos_contrato * 12)
 
-    # Armazena os resultados em um dicionário
-    resultados = {
-        "valor_entrada": float(round(valor_entrada, 2)),
-        "valor_financiado": float(round(valor_financiado, 2)),
-        "guardar_total": float(round(guardar_total, 2)),
-        "guardar_mensal": float(round(guardar_mensal, 2)),
-    }
+        # Armazena os resultados em um dicionário
+        resultados = {
+            "valor_entrada": float(round(valor_entrada, 2)),
+            "valor_financiado": float(round(valor_financiado, 2)),
+            "guardar_total": float(round(guardar_total, 2)),
+            "guardar_mensal": float(round(guardar_mensal, 2)),
+        }
 
-    # Cria a simulação no banco de dados
-    db_simulacao = models.Simulacao(
-        valor_imovel=simulacao.valor_imovel,
-        percentual_entrada=simulacao.percentual_entrada,
-        anos_contrato=simulacao.anos_contrato,
-        resultados=resultados,
-    )
+        # Cria a simulação no banco de dados
+        db_simulacao = models.Simulacao(
+            valor_imovel=simulacao.valor_imovel,
+            percentual_entrada=simulacao.percentual_entrada,
+            anos_contrato=simulacao.anos_contrato,
+            resultados=resultados,
+        )
 
-    db.add(db_simulacao)      # Adiciona à sessão
-    db.commit()               # Salva no banco
-    db.refresh(db_simulacao)  # Atualiza com dados do banco (ex: id)
-    return db_simulacao       # Retorna a simulação criada
+        db.add(db_simulacao)      # Adiciona à sessão
+        db.commit()               # Salva no banco
+        db.refresh(db_simulacao)  # Atualiza com dados do banco (ex: id)
+        return db_simulacao       # Retorna a simulação criada
+    except Exception as e:
+        db.rollback()  # Desfaz transações em caso de erro
+        # Retorna erro 500 com mensagem detalhada
+        raise HTTPException(status_code=500, detail=f"Erro ao criar simulação: {str(e)}")
 
 # Endpoint para listar todas as simulações
 @app.get("/historico", response_model=list[schemas.SimulacaoResponse])
 def listar_simulacoes(db: Session = Depends(get_db)):
-    return db.query(models.Simulacao).all()
+    try:
+        # Busca todas as simulações no banco de dados
+        return db.query(models.Simulacao).all()
+    except Exception as e:
+        # Retorna erro 500 com mensagem detalhada
+        raise HTTPException(status_code=500, detail=f"Erro ao buscar histórico: {str(e)}")
