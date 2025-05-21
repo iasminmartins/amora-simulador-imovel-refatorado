@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from . import models, schemas
 from .database import SessionLocal, engine
@@ -62,12 +62,15 @@ def criar_simulacao(simulacao: schemas.SimulacaoCreate, db: Session = Depends(ge
         # Retorna erro 500 com mensagem detalhada
         raise HTTPException(status_code=500, detail=f"Erro ao criar simulação: {str(e)}")
 
-# Endpoint para listar todas as simulações
+# Endpoint para listar simulações com paginação
 @app.get("/historico", response_model=list[schemas.SimulacaoResponse])
-def listar_simulacoes(db: Session = Depends(get_db)):
+def listar_simulacoes(
+    skip: int = Query(0, ge=0, description="Número de registros a pular"),
+    limit: int = Query(10, ge=1, le=10, description="Quantidade máxima de registros a retornar"),
+    db: Session = Depends(get_db)):
     try:
-        # Busca todas as simulações no banco de dados
-        return db.query(models.Simulacao).all()
+        # Busca todas as simulações no banco de dados, ordenando do mais novo para o mais antigo
+        return db.query(models.Simulacao).order_by(models.Simulacao.data.desc()).offset(skip).limit(limit).all()
     except Exception as e:
         # Retorna erro 500 com mensagem detalhada
         raise HTTPException(status_code=500, detail=f"Erro ao buscar histórico: {str(e)}")
