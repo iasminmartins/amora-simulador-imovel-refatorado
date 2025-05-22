@@ -4,6 +4,18 @@ Este repositório contém o desenvolvimento de uma aplicação full stack para s
 
 ---
 
+## Sumário
+
+- [Objetivo](#objetivo)
+- [Tecnologias utilizadas](#tecnologias-utilizadas)
+- [Estrutura do projeto](#estrutura-do-projeto)
+- [Como executar o projeto com Docker](#como-executar-o-projeto-com-docker)
+- [Etapas de desenvolvimento](#etapas-de-desenvolvimento)
+- [Possíveis melhorias e próximos passos](#possíveis-melhorias-e-próximos-passos)
+- [Melhorias implementadas na versão refatorada](#melhorias-implementadas-na-versão-refatorada)
+
+---
+
 ## Objetivo
 
 Permitir que o usuário simule a compra de um imóvel informando o valor total, a entrada e o número de parcelas desejadas, com retorno da simulação.
@@ -40,15 +52,12 @@ amora-simulador-imovel/
 │   │        ├── layout.tsx
 │   │        ├── page.tsx
 │   │        ├── resultado.tsx
-│   │        └── simuladorForm.tsx
+│   │        ├── simuladorForm.tsx
+│   │        └── validacao.tsx
 │   ├── .gitignore
 │   ├── dockerfile
-│   ├── eslint.config.mjs
-│   ├── next.config.js
 │   ├── package-lock.json
-│   ├── package.json
-│   ├── postcss.config.mjs
-│   └── tsconfig.json
+│   └── package.json
 ├── .env.example
 ├── .gitignore
 ├── docker-compose.yml
@@ -199,10 +208,10 @@ O layout utiliza a paleta de cores da aMORA, garantindo identidade visual e boa 
 ## Possíveis melhorias e próximos passos
 
 - Validação e feedback visual no frontend:
-Adicionar mensagens de erro e validação em tempo real nos campos do formulário para melhorar a experiência do usuário.
+Adicionar mensagens de erro e validação em tempo real nos campos do formulário para melhorar a experiência do usuário. ✅
 
 - Mensagens de sucesso/erro:
-Exibir alertas claros ao usuário após o envio do formulário, tanto para sucesso quanto para falhas de comunicação com a API.
+Exibir alertas claros ao usuário após o envio do formulário, tanto para sucesso quanto para falhas de comunicação com a API. ✅
 
 - Acessibilidade:
 Tornar a aplicação mais acessível, garantindo navegação por teclado, uso correto de labels, contraste adequado de cores, textos alternativos para leitores de tela e estrutura semântica nos elementos HTML.
@@ -211,7 +220,7 @@ Tornar a aplicação mais acessível, garantindo navegação por teclado, uso co
 Melhorar o layout para dispositivos móveis e tablets.
 
 - Melhorias no layout:
-Refinar o design visual, ajustar espaçamentos, tamanhos de fonte e responsividade, além de considerar animações suaves e feedback visual para interações do usuário.
+Refinar o design visual, ajustar espaçamentos, tamanhos de fonte e responsividade, além de considerar animações suaves e feedback visual para interações do usuário. ✅
 
 - Autenticação de usuários:
 Implementar login/cadastro para que cada usuário possa ver apenas seu próprio histórico de simulações.
@@ -221,3 +230,39 @@ Permitir ao usuário exportar a simulação em PDF ou CSV.
 
 - Documentação da API:
 Expandir a documentação dos endpoints, exemplos de request/response e possíveis erros.
+
+## Melhorias implementadas na versão refatorada
+
+### Backend: 
+
+- **Validação de entrada aprimorada:**  
+  Implementação de validações robustas utilizando os valores de negócio da aMORA, garantindo que apenas dados válidos sejam processados.
+- **Tipagem e segurança:**  
+  Remoção do uso de `Any` e adoção de tipagem forte com Pydantic, aumentando a segurança e previsibilidade do código.
+- **Tratamento de exceções:**  
+  Adição de tratamento centralizado de exceções nos endpoints, proporcionando respostas mais claras e amigáveis em caso de erro.
+- **Paginação no histórico:**  
+  Implementação de paginação no endpoint `/historico`, permitindo melhor performance e usabilidade ao consultar grandes volumes de simulações.
+
+### Frontend
+
+- **Componentização e organização:**  
+  Refatoração do arquivo `page.tsx` em componentes menores e reutilizáveis (`historico.tsx`, `layout.tsx`, `resultado.tsx`, `validacao.tsx`, `simuladorForm.tsx`), facilitando manutenção e evolução do projeto.
+- **Melhoria do layout e experiência do usuário:**  
+  Redesign completo da interface com foco em usabilidade e identidade visual alinhada à marca aMORA.
+- **Limpeza da estrutura:**  
+  Remoção da pasta `src`.
+- **Validação e feedback visual em tempo real:**  
+  Implementação de validação instantânea nos campos do formulário, com mensagens de erro claras e acessíveis.
+- **Mensagens de sucesso e erro:**  
+  Exibição de alertas visuais após o envio do formulário, informando o usuário sobre o sucesso ou falha da operação.
+- **Exibição condicional dos resultados:**  
+  A seção de resultados só é exibida após uma simulação ser realizada, evitando confusão para o usuário.
+- **Scroll automático para resultados:**  
+  Após uma simulação, a interface realiza scroll suave até a seção de resultados, melhorando a navegação.
+- **Formatação de dados:**  
+  Conversão automática de datas e valores monetários para o formato brasileiro, garantindo clareza na apresentação das informações.
+- **Acessibilidade:**  
+  Inclusão de navegação por teclado e foco visível, tornando a aplicação mais acessível para todos os usuários.
+
+---
