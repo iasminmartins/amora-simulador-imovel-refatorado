@@ -12,6 +12,8 @@
   --color-dark: #121e4b;
   --color-light: #dcf1fc;
   --color-shadow: rgba(0, 0, 0, 0.04);
+  --color-success: #388e3c;
+  --color-error: #d32f2f;
 }
 
 /* Estrutura */
@@ -89,10 +91,6 @@ input::placeholder {
   color: var(--color-grey); 
 }
 
-input:focus {
-  outline: 4px solid var(--color-secondary);
-}
-
 .input-helper {
   font-size: 0.8em;
   margin: 10px 0 15px;
@@ -112,6 +110,7 @@ button {
   font-weight: 600;
   transition: background 0.2s, color 0.2s;
   margin-top: 1rem; 
+  margin-bottom: 0;
 }
 
 /* Efeito hover/focus no botão */
@@ -193,12 +192,16 @@ button:focus {
   margin: 1rem 0;
 }
 
+.historico-valor {
+  margin-left: 12px;
+}
+
 /* Feedback visual */
 .erro {
   display: block;
   min-height: 1.2em;
   margin: 10px 0 15px;
-  color: #d32f2f;
+  color: var(--color-error);
   font-size: 0.97em;
   transition: opacity 0.2s;
 }
@@ -206,7 +209,7 @@ button:focus {
 .mensagem-sucesso,
 .mensagem-erro {
   min-height: 1.5em;
-  margin: 0;
+  margin: 10px 0 0 0;
   text-align: center;
   font-weight: 600;
   transition: opacity 0.2s;
@@ -222,9 +225,18 @@ button:focus {
 }
 
 .mensagem-sucesso {
-  color: #388e3c;
+  color: var(--color-success);
 }
 
 .mensagem-erro {
-  color: #d32f2f;
+  color: var(--color-error);
+}
+
+/* Acessibilidade */
+input:focus-visible,
+button:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2.5px solid var(--color-primary);
+  outline-offset: 2px;
 }
