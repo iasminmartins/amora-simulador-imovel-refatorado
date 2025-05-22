@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import SimuladorForm from './simuladorForm'
 import Resultado from './resultado'
 import Historico from './historico'
+import { validarCampo, validarFormulario } from './validacao'
 
 // Tipo para o resultado da simulação
 type Resultado = {
@@ -30,34 +31,69 @@ export default function Home() {
     anos_contrato: ''
   })
 
+  // Estado para erros de validação dos campos
+  const [erros, setErros] = useState<{ [key: string]: string }>({})
+
   // Estado para o resultado da simulação atual
   const [resultado, setResultado] = useState<Resultado | null>(null)
 
   // Estado para o histórico de simulações
   const [historico, setHistorico] = useState<HistoricoItem[]>([])
   
-  // Atualiza os dados do formulário conforme o usuário digita
+  // Estado para status e mensagem de feedback do envio
+  const [status, setStatus] = useState<'idle' | 'sucesso' | 'erro'>('idle')
+  const [mensagem, setMensagem] = useState('')
+
+  // Atualiza os dados do formulário e valida em tempo real
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
+    const { name, value } = e.target
+    setForm({ ...form, [name]: value })
+    setErros({ ...erros, [name]: validarCampo(name, value) })
   }
 
   // Quando o formulário é enviado
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    // Envia os dados para o backend via POST
-    const resposta = await fetch('http://localhost:8000/simulacao', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        valor_imovel: parseFloat(form.valor_imovel),
-        percentual_entrada: parseFloat(form.percentual_entrada),
-        anos_contrato: parseInt(form.anos_contrato)
+     e.preventDefault()
+    // Valida todos os campos antes de enviar
+    const novosErros = validarFormulario(form)
+    setErros(novosErros)
+    if (Object.keys(novosErros).length > 0) return
+
+    try {
+      setStatus('idle')
+      setMensagem('')
+      // Envia os dados para o backend via POST
+      const resposta = await fetch('http://localhost:8000/simulacao', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          valor_imovel: parseFloat(form.valor_imovel),
+          percentual_entrada: parseFloat(form.percentual_entrada),
+          anos_contrato: parseInt(form.anos_contrato)
+        })
       })
-    })
-    const dados = await resposta.json()
-    setResultado(dados.resultados) // Atualiza o resultado da simulação
-    getHistorico() // Atualiza o histórico após nova simulação
+      if (!resposta.ok) throw new Error('Erro ao enviar simulação')
+      const dados = await resposta.json()
+      setResultado(dados.resultados) // Atualiza o resultado da simulação
+      setStatus('sucesso')
+      setMensagem('Simulação realizada com sucesso!')
+      getHistorico() // Atualiza o histórico após nova simulação
+    } catch {
+      setStatus('erro')
+      setMensagem('Erro ao enviar simulação. Tente novamente.')
+    }
   }
+
+  // Esconde a mensagem de sucesso após 3 segundos
+  useEffect(() => {
+    if (status === 'sucesso') {
+      const timer = setTimeout(() => {
+        setStatus('idle')
+        setMensagem('')
+      }, 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [status])
 
   // Busca histórico de simulações do backend
   const getHistorico = async () => {
@@ -74,7 +110,14 @@ export default function Home() {
   return (
     <>
       <div className="bloco-formulario">
-        <SimuladorForm form={form} onChange={handleChange} onSubmit={handleSubmit} />
+        <SimuladorForm
+          form={form}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          erros={erros}
+          status={status}
+          mensagem={mensagem}
+        />
       </div>
       <div className="bloco-resultado">
         <Resultado resultado={resultado} />
