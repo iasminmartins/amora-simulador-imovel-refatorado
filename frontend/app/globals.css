@@ -192,3 +192,39 @@ button:focus {
   text-align: center;
   margin: 1rem 0;
 }
+
+/* Feedback visual */
+.erro {
+  display: block;
+  min-height: 1.2em;
+  margin: 10px 0 15px;
+  color: #d32f2f;
+  font-size: 0.97em;
+  transition: opacity 0.2s;
+}
+
+.mensagem-sucesso,
+.mensagem-erro {
+  min-height: 1.5em;
+  margin: 0;
+  text-align: center;
+  font-weight: 600;
+  transition: opacity 0.2s;
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mensagem-sucesso.oculta,
+.mensagem-erro.oculta {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mensagem-sucesso {
+  color: #388e3c;
+}
+
+.mensagem-erro {
+  color: #d32f2f;
+}
