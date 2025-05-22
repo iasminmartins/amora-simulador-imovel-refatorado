@@ -32,13 +32,15 @@ export default function Historico({ historico }: HistoricoProps) {
         )}
         {/* Lista cada simulação do histórico */}
         {historico.map((item) => {
-          const dataObj = new Date(item.data)
+          // Força a string para UTC
+          const dataObj = new Date(item.data.endsWith('Z') ? item.data : item.data + 'Z')
           return (
             <div className="historico-item" key={item.id}>
               <span>
-                {dataObj.toLocaleDateString('pt-BR')} {dataObj.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                {dataObj.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}{' '}
+                {dataObj.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })}
               </span>
-              <span style={{ marginLeft: 12 }}>
+              <span className="historico-valor">
                 R$ {item.valor_imovel.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </span>
             </div>
