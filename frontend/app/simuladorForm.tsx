@@ -79,8 +79,12 @@ export default function SimuladorForm({
           Simular
         </button>
         {/* Mensagens de feedback */}
-        {status === 'sucesso' && <div className="mensagem-sucesso">{mensagem}</div>}
-        {status === 'erro' && <div className="mensagem-erro">{mensagem}</div>}
+        <div className={`mensagem-sucesso${status === 'sucesso' ? '' : ' oculta'}`}>
+          {status === 'sucesso' ? mensagem : ''}
+        </div>
+        <div className={`mensagem-erro${status === 'erro' ? '' : ' oculta'}`}>
+          {status === 'erro' ? mensagem : ''}
+        </div>
       </form>
     </section>
   )
