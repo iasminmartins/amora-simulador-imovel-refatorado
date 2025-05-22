@@ -5,10 +5,20 @@ type SimuladorFormProps = {
   form: { valor_imovel: string; percentual_entrada: string; anos_contrato: string } // Estado do formulário
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void // Função para atualizar campos
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void   // Função para envio do formulário
+  erros: { [key: string]: string }
+  status: 'idle' | 'sucesso' | 'erro'
+  mensagem: string
 }
 
-// Componente de formulário do simulador
-export default function SimuladorForm({ form, onChange, onSubmit }: SimuladorFormProps) {
+// Componente de formulário do simulador com validação em tempo real e feedback visual
+export default function SimuladorForm({
+  form,
+  onChange,
+  onSubmit,
+  erros,
+  status,
+  mensagem
+}: SimuladorFormProps) {
   return (
     <section>
       <h2>Faça sua simulação</h2>
@@ -23,7 +33,10 @@ export default function SimuladorForm({ form, onChange, onSubmit }: SimuladorFor
             onChange={onChange}
             required
             placeholder="De R$ 200.000 até R$ 6.000.000"
+            min={200000}
+            max={6000000}
           />
+          {erros.valor_imovel && <span className="erro">{erros.valor_imovel}</span>}
           <div className="input-helper">
             Atendemos imóveis somente na cidade de São Paulo.
           </div>
@@ -38,9 +51,12 @@ export default function SimuladorForm({ form, onChange, onSubmit }: SimuladorFor
             onChange={onChange}
             required
             placeholder="Mínimo de 5%"
+            min={5}
+            max={100}
           />
+          {erros.percentual_entrada && <span className="erro">{erros.percentual_entrada}</span>}
           <div className="input-helper">
-            O valor da entrada deve ser no mínimo de R$ 10000,00.
+            O valor da entrada deve ser no mínimo de 5% do valor do imóvel.
           </div>
         </div>
         {/* Campo: Anos de contrato */}
@@ -52,13 +68,19 @@ export default function SimuladorForm({ form, onChange, onSubmit }: SimuladorFor
             value={form.anos_contrato}
             onChange={onChange}
             required
-            placeholder="De 1 ano até 40 anos"
+            placeholder="De 1 ano até 3 anos"
+            min={1}
+            max={3}
           />
+          {erros.anos_contrato && <span className="erro">{erros.anos_contrato}</span>}
         </div>
         {/* Botão de envio */}
         <button type="submit">
           Simular
         </button>
+        {/* Mensagens de feedback */}
+        {status === 'sucesso' && <div className="mensagem-sucesso">{mensagem}</div>}
+        {status === 'erro' && <div className="mensagem-erro">{mensagem}</div>}
       </form>
     </section>
   )
