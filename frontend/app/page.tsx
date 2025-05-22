@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import SimuladorForm from './simuladorForm'
 import Resultado from './resultado'
 import Historico from './historico'
@@ -44,6 +44,9 @@ export default function Home() {
   const [status, setStatus] = useState<'idle' | 'sucesso' | 'erro'>('idle')
   const [mensagem, setMensagem] = useState('')
 
+  // Ref para a seção de resultados (para scroll automático)
+  const resultadoRef = useRef<HTMLDivElement>(null)
+
   // Atualiza os dados do formulário e valida em tempo real
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -84,12 +87,16 @@ export default function Home() {
     }
   }
 
-  // Esconde a mensagem de sucesso após 3 segundos
+  // Esconde a mensagem de sucesso após 3 segundos e faz scroll suave para a seção de resultados
   useEffect(() => {
     if (status === 'sucesso') {
       const timer = setTimeout(() => {
         setStatus('idle')
         setMensagem('')
+        // Scroll para a seção de resultados após a mensagem sumir
+        if (resultadoRef.current) {
+          resultadoRef.current.scrollIntoView({ behavior: 'smooth' })
+        }
       }, 3000)
       return () => clearTimeout(timer)
     }
@@ -119,9 +126,12 @@ export default function Home() {
           mensagem={mensagem}
         />
       </div>
-      <div className="bloco-resultado">
-        <Resultado resultado={resultado} />
-      </div>
+      {/* Só mostra a seção de resultados se houver resultado */}
+      {resultado && (
+        <div className="bloco-resultado" ref={resultadoRef}>
+          <Resultado resultado={resultado} />
+        </div>
+      )}
       <div className="bloco-historico">
         <Historico historico={historico} />
       </div>
